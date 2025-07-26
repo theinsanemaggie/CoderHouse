@@ -1,6 +1,7 @@
 import {promises as fs} from "fs";
 import path, { resolve } from "path";
 import { fileURLToPath } from "url";
+import router from "../routers/products.router";
 
 //Configuración dirname en módulos
 const __filename = fileURLToPath(import.meta.url); //url a rutas de archivo
@@ -8,7 +9,7 @@ const __dirname = path.dirname(__filename); //ruta de archivo a normal
 
 class ProductManager{ 
     constructor(filePath){
-        this.path = path.resolve.(__dirname, "..", filePath);
+        this.path = path.resolve(__dirname, "..", filePath);
     }
 
     async getProducts(){
@@ -44,12 +45,26 @@ class ProductManager{
 
         }
         products.push(newProduct);
-        await fs.writeFile(this.path,JSON.stringify(products,null,2))
+        await fs.writeFile(this.path, JSON.stringify(products,null,2))
         return newProduct;
     }
     async updateProduct(id,updates){
-        const products = await this.getProducts()
-        const index = products.findIndex(p => id === id)
+        const products = await this.getProducts() //obtenemos los productos
+        const index = products.findIndex(p => id === id) // busca el producto según el id
         if (index === -1) return {error: `Producto no encontrado`}
+
+        delete updates.id; //eliminar el campo id del objeto update para evitar duplicados y que el user lo modifique
+        products[index] = {... products [index], ...updates}
+        await fs.writeFile(this.path, JSON.stringify(products, null, 2))
+        return products[index]
+    }
+
+    async deleteProduct(id){
+        const products = await this.getProducts()
+        const updated = products.filter(p => p.id != id);
+        await fs.writeFile(this.path, JSON.stringify(products, null, 2))
+        return {message: `Producto ${id} eliminado`}
     }
 }
+
+export default ProductManager;
