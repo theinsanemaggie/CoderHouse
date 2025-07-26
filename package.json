@@ -1,0 +1,17 @@
+{
+  "name": "primerentrega",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "scripts": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
