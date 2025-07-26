@@ -1,7 +1,7 @@
 import {promises as fs} from "fs";
 import path, { resolve } from "path";
 import { fileURLToPath } from "url";
-import router from "../routers/products.router";
+//import router from "../routers/products.router";
 
 //Configuración dirname en módulos
 const __filename = fileURLToPath(import.meta.url); //url a rutas de archivo

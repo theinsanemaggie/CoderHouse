@@ -1,7 +1,8 @@
 import {promises as fs} from "fs";
 import path, { resolve } from "path";
 import { fileURLToPath } from "url";
-import router from "../routers/products.router";
+//import router from "../routers/products.router";
+
 
 //Configuración dirname en módulos
 const __filename = fileURLToPath(import.meta.url); //url a rutas de archivo
@@ -53,7 +54,7 @@ class CartManager{
         }else{
             cart.products.push({product:productId, quantity:1})
         }
-        
+
         //Guardamos lo actualizado
         await fs.writeFile(this.path, JSON.stringify(carts, null, 2))
         return cart;

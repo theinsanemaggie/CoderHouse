@@ -1,7 +1,7 @@
-import { Router, Router } from "express";
-import ProductManager from "../managers/Productmanager";
+import { Router } from "express";
+import ProductManager from "../managers/ProductManager.js";
 const router = Router();
-const ProductManager = new ProductManager("./src/data/product.json");
+const productManager = new ProductManager("./src/data/product.json");
 
 //get --> obtener datos de los productos
 
@@ -13,7 +13,7 @@ router.get("/", async(req, res) => {
 //obtiene por id
 router.get("/:id", async(req, res)=>{
     const pid = req.params.id;
-    const product = await productManager.getproductByid(pid);
+    const product = await productManager.getProductByid(pid);
     product ? res.json(product) : res.status(404).json({error: "Elemento no encontrado"});
 })
 
