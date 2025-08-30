@@ -1,5 +1,7 @@
 import express from "express";
 const app = express(); //instancia de express.
+const http = require ("http").createServer(app);
+const io = require("socket.io")(http);
 import productsRouter from "./routers/products.router.js";
 import  cartsRouter from "./routers/carts.router.js";
 const PORT = 8080;
