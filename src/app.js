@@ -1,18 +1,36 @@
 import express from "express";
-const app = express(); //instancia de express.
-const http = require ("http").createServer(app);
-const io = require("socket.io")(http);
+import {engine} from "express-handlebars";
+import {Server} from "socket.io";
+import http from "http";
+
 import productsRouter from "./routers/products.router.js";
 import  cartsRouter from "./routers/carts.router.js";
+import viewsRouter from "./routers/views.router.js";
+
+//instancias
+const app = express();
+const http = require ("http").createServer(app); // servidor http basado en express
+const io = new Server(server); //const io = require("socket.io")(http);
+
 const PORT = 8080;
 
-//Middleware que express lea los json de los request.
-app.use(express.json());
+//Midlewares
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("./src/public")); 
 
-//Definición de rutas para los productos y carritos.
+//Rutas
 app.use(`/api/products`, productsRouter);
 app.use(`/api/carts`, cartsRouter);
+app.use(`/`, viewsRouter); //realTimeProducts
 
-app.listen(PORT =>{
-    console.log(`Servidor en el puerto 8080`)
+//Configuración de socket
+io.on("connection", (socket) => {
+    console.log("Usuario conectado con websockets");
+});
+
+server.listen(PORT =>{
+    console.log(`Servidor en el puerto ${PORT}`)
 })
+
+export { io };
