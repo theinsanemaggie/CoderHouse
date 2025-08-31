@@ -1,0 +1,32 @@
+<h1>Productos en tiempo real</h1>
+<ul id="product-list"></ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    socket.on("updateProducts", (products) => {
+        const list = document.getElementById("product-list");
+        list.innerHTML = "";
+        
+        <!--Si no tiene un valor asignado, se le asigna uno por defecto-->
+        products.forEach(p => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <strong>${p.title} - $${p.price}</strong><br>
+                Descripción: ${p.description || 'N/A'}<br> 
+                Código: ${p.code || 'N/A'}<br>
+                Stock: ${p.stock || 0}<br>
+                Categoría: ${p.category || 'N/A'}<br>
+                Estado: ${p.status ? 'Disponible' : 'No disponible'}<br>
+                ${p.thumbnails?.length ? `
+                    <p>Imágenes:</p>
+                    <ul>
+                        ${p.thumbnails.map(t => `<li><img src="${t}" width="100"></li>`).join('')}
+                    </ul>` : ''
+                }
+            `;
+            list.appendChild(li);
+        });
+    });
+</script>

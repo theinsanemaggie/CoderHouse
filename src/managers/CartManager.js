@@ -1,7 +1,6 @@
 import {promises as fs} from "fs";
 import path, { resolve } from "path";
 import { fileURLToPath } from "url";
-//import router from "../routers/products.router";
 
 
 //Configuración dirname en módulos
@@ -47,16 +46,14 @@ class CartManager{
 
         if (!cart) return {error: "Carrito no encontrado"}
 
-        //¿El producto existe?
-        const existingProduct = cart.products.find (p => p.product === productId)
+        const existingProduct = cart.products.find (p => p.product === productId) //¿El producto existe?
         if (existingProduct){
             existingProduct.quantity +=1;
         }else{
             cart.products.push({product:productId, quantity:1})
         }
 
-        //Guardamos lo actualizado
-        await fs.writeFile(this.path, JSON.stringify(carts, null, 2))
+        await fs.writeFile(this.path, JSON.stringify(carts, null, 2)) //Guardamos lo actualizado
         return cart;
     }
 
