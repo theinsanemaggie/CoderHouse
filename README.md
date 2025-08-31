@@ -1,1 +1,1 @@
-Nota: proyecto completo según solicitado
+Nota: entrega 2 en desarrollo.
