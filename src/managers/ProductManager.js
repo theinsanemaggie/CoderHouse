@@ -39,7 +39,7 @@ class ProductManager{
             status: productData.status ?? true,
             stock: productData.stock,
             category: productData.category,
-            thumbanails: productData-thumbanails || []
+            thumbanails: productData-thumbnails || []
 
 
         }
@@ -47,6 +47,7 @@ class ProductManager{
         await fs.writeFile(this.path, JSON.stringify(products,null,2))
         return newProduct;
     }
+    
     async updateProduct(id,updates){
         const products = await this.getProducts() //obtenemos los productos
         const index = products.findIndex(p => id === id) // busca el producto según el id
