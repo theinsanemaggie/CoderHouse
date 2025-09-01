@@ -2,7 +2,7 @@
 
 # ✨ Consignas entrega 1: ✨
 
-## ✨ Descripción General
+## ✨ Descripción General ✨
 Desarrollar un servidor que contenga los endpoints y servicios necesarios para gestionar los productos y carritos de compra para tu API.
 
 ### Requisitos de la Primera Entrega

@@ -30,11 +30,6 @@ app.set("views", path.join(__dirname, "views"))
 
 app.use("/", crearRouterVistas())
 
-// //Rutas
-// app.use(`/api/products`, productsRouter);
-// app.use(`/api/carts`, cartsRouter);
-// app.use(`/`, viewsRouter); //realTimeProducts
-
 //Configuración de socket
 io.on("connection", (socket) => {
     console.log("Usuario conectado con websockets");
