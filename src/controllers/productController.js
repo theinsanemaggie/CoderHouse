@@ -1,4 +1,4 @@
-import { obtenerProductos } from "./services/servicioProductos.js"
+import { obtenerProductos } from "../services/servicioProductos.js"
 
 export function mostrarInicio(req, res) {
   const productos = obtenerProductos()

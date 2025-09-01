@@ -1,10 +1,10 @@
 import express from "express";
 import {engine} from "express-handlebars";
+import { createServer } from "http";
 import {Server} from "socket.io";
-import http from "http";
 import path from "path"
 import { fileURLToPath } from "url"
-import { crearRouterVistas } from "./routes/vistasRouter.js"
+import { crearRouterVistas } from "./routers/views.router.js"
 
 import productsRouter from "./routers/products.router.js";
 import  cartsRouter from "./routers/carts.router.js";
@@ -13,11 +13,13 @@ import viewsRouter from "./routers/views.router.js";
 //instancias
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const app = express();
-const http = require ("http").createServer(app); // servidor http basado en express
-const io = new Server(server); //const io = require("socket.io")(http);
 
+const app = express();
 const PORT = 8080;
+
+const httpServer = createServer(app); // servidor http basado en express
+const io = new Server(httpServer); //const io = require("socket.io")(http);
+
 
 //Midlewares
 app.use(express.json()); 
@@ -35,7 +37,7 @@ io.on("connection", (socket) => {
     console.log("Usuario conectado con websockets");
 });
 
-server.listen(PORT =>{
+httpServer.listen(PORT, () =>{
     console.log(`Servidor en el puerto ${PORT}`)
 })
 

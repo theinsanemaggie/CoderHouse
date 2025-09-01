@@ -59,7 +59,7 @@ Desarrollar un servidor que contenga los endpoints y servicios necesarios para g
 ### Formato del Entregable
 - Proporcionar un enlace al repositorio de GitHub con el proyecto completo, sin la carpeta node_modules.
 
-# ✨ Consignas entrega 2: 
+# ✨✨ Consignas entrega 2: ✨✨
 
 ## Websockets
 - Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de productos, sin embargo, ésta trabajará con websockets.

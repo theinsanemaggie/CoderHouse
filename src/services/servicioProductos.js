@@ -1,4 +1,4 @@
-import { leerTodos, guardarUno, borrarPorId } from "../models/productosRepositorio.js"
+import { leerTodos, guardarUno, borrarPorId } from "../models/productoRepositorio.js"
 
 export function obtenerProductos() {
   return leerTodos()

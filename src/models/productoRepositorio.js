@@ -12,7 +12,7 @@ export function guardarUno(producto) {
   return producto
 }
 
-export function DeleteById(id) {
+export function borrarPorId(id) {
   listaProductos = listaProductos.filter(p => p.id !== id)
 }
 
