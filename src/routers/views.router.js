@@ -7,12 +7,6 @@ import ProductManager from "../managers/ProductManager.js";
 const router = Router();
 const productManager = new ProductManager("./src/data/products.json");
 
-//  Home
-// router.get("/", async (req, res) => {
-//   const products = await productManager.getProducts();
-//   res.render("home", { products });
-// });
-
 // Real time products
 export function crearRouterVistas() {
   const router = Router()

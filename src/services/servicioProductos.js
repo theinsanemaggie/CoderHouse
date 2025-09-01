@@ -6,9 +6,9 @@ export function obtenerProductos() {
 
 export function crearProducto(datos) {
   const id = Date.now()
-  const nombre = String(datos?.nombre || "").trim()
-  const precio = Number(datos?.precio || 0)
-  const producto = { id, nombre, precio }
+  const name = String(datos?.nombre || "").trim()
+  const price = Number(datos?.precio || 0)
+  const producto = { id, name, price }
   return guardarUno(producto)
 }
 

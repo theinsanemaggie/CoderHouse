@@ -1,6 +1,6 @@
 let listaProductos = [
-  { id: 1, nombre: "Buzo Algodón", precio: 12000 },
-  { id: 2, nombre: "Zapatillas Deportivas", precio: 45000 }
+  { id: 1, name: "Buzo Algodón", price: 12000 },
+  { id: 2, name: "Zapatillas Deportivas", price: 45000 }
 ]
 
 export function leerTodos() {

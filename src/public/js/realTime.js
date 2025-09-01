@@ -10,7 +10,8 @@ function render(list) {
   })
 }
 
-socket.on("productos:list", renderizar)
+socket.on("productos:list", render)
+
 const formCrear = document.getElementById("formCrear")
 
 formCrear.addEventListener("submit", e => {

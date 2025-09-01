@@ -41,4 +41,29 @@ httpServer.listen(PORT, () =>{
     console.log(`Servidor en el puerto ${PORT}`)
 })
 
+let productos = [];
+
+io.on("connection", socket => {
+  console.log("Cliente conectado");
+
+  // Enviar lista inicial
+  socket.emit("productos:list", productos);
+
+  // Crear producto
+  socket.on("producto:crear", ({ nombre, precio }) => {
+    const nuevo = {
+      id: productos.length + 1,
+      name: nombre,
+      price: parseFloat(precio)
+    };
+    productos.push(nuevo);
+    io.emit("productos:list", productos);
+  });
+
+  // Eliminar producto
+  socket.on("producto:eliminar", id => {
+    productos = productos.filter(p => p.id !== id);
+    io.emit("productos:list", productos);
+  });
+});
 export default app
