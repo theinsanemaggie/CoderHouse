@@ -1,4 +1,4 @@
-## Nota: entrega 2 en desarrollo.
+## Nota: el inicio no se actualiza cuando agrego un producto desde el realTime. Preguntar en clase.
 
 # ✨ Consignas entrega 1: ✨
 

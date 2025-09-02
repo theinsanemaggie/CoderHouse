@@ -15,5 +15,4 @@ export function crearRouterVistas() {
   return router
 }
 
-
 export default router;

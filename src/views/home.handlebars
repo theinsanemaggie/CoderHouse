@@ -1,7 +1,8 @@
+
 <h1>Lista de productos</h1>
-<ul>
+<ul id="listaProductos">
   {{#each productos}}
-    <li>{{this.id}} • {{this.nombre}} • ${{this.precio}}</li>
+    <li>{{this.id}} • {{this.name}} • ${{this.price}}</li>
   {{/each}}
 </ul>
 <p><a href="/realtimeproducts">Ver productos en tiempo real</a></p>

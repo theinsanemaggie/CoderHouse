@@ -1,7 +1,8 @@
 import { obtenerProductos } from "../services/servicioProductos.js"
 
-export function mostrarInicio(req, res) {
-  const productos = obtenerProductos()
+export async function mostrarInicio(req, res) {
+  const productos = await obtenerProductos()
+  console.log("Productos cargados:", productos)
   res.render("home", { titulo: "Inicio", productos })
 }
 
