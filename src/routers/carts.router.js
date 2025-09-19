@@ -1,11 +1,11 @@
 import { Router } from "express";
-import CartManager from "../managers/CartManager.js";
-import ProductManager from "../managers/ProductManager.js";
-import {createCart, getCartById, addProductToCart, updateCartProducts, updateProductQuantity, deleteProductFromCart, emptyCart } from "../services/cartService.js";
+//import CartManager from "../managers/CartManager.js";
+//import ProductManager from "../managers/ProductManager.js";
+import {createCart, getCartById, addProductToCart, updateCartProducts, updateProductQuantity, deleteProductFromCart, emptyCart } from "../services/servicioCarrito.js";
 
 const router = Router();
-const cm = new CartManager("./src/data/carts.json");
-const pm = new ProductManager("./src/data/products.json");
+//const cm = new CartManager("./src/data/carts.json");
+//const pm = new ProductManager("./src/data/products.json");
 
 /// POST /api/carts -> crear carrito vacío
 router.post("/", async (req, res) => {

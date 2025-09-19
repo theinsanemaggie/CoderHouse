@@ -1,4 +1,4 @@
-import { CartModel } from "../models/Cart.js";
+import { CartModel } from "../models/cart.Model.js";
 
 // Crear carrito vacío
 export async function createCart() {

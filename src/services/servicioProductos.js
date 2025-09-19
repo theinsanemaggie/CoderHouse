@@ -1,23 +1,22 @@
-import { ProductModel } from "../models/Product.js";
+import { ProductModel } from "../models/product.Model.js";
 
+// GET con filtros, paginación y sort
 export async function getProducts({ limit = 10, page = 1, sort, query }) {
   const filter = {};
 
-  // Filtros
   if (query) {
     if (query === "available") {
       filter.status = true;
       filter.stock = { $gt: 0 };
+
     } else {
-      filter.category = query; 
+      filter.category = query;
     }
   }
 
-  // Ordenamiento
   const sortOption = sort === "asc" ? { price: 1 } :
                      sort === "desc" ? { price: -1 } : {};
 
-  // Usamos paginate
   const options = {
     page,
     limit,
@@ -41,28 +40,22 @@ export async function getProducts({ limit = 10, page = 1, sort, query }) {
   };
 }
 
+// GET product by ID
+export async function getProductById(id) {
+  return await ProductModel.findById(id);
+}
 
-// import ProductManager from "../managers/ProductManager.js";
+// POST create product
+export async function createProduct(data) {
+  return await ProductModel.create(data);
+}
 
-// const productManager = new ProductManager("./src/data/products.json");
+// PUT update product
+export async function updateProduct(id, updates) {
+  return await ProductModel.findByIdAndUpdate(id, updates, { new: true });
+}
 
-// export async function obtenerProductos() {
-//   return await productManager.getProducts();
-// }
-
-// export async function crearProducto(datos) {
-//   return await productManager.addProduct({
-//     title: datos?.nombre ?? datos?.title,
-//     price: datos?.precio ?? datos?.price,
-//     description: datos?.descripcion ?? datos?.description,
-//     code: datos?.codigo ?? datos?.code,
-//     stock: datos?.stock ?? 0,
-//     category: datos?.categoria ?? datos?.category,
-//     thumbnails: datos?.thumbnails ?? []
-//   });
-// }
-
-// export async function eliminarProducto(id) {
-//   return await productManager.deleteProduct(id);
-// }
-
+// DELETE product
+export async function deleteProduct(id) {
+  return await ProductModel.findByIdAndDelete(id);
+}

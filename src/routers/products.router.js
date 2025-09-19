@@ -1,10 +1,10 @@
 import { Router } from "express";
-import ProductManager from "../managers/ProductManager.js";
+//import ProductManager from "../managers/ProductManager.js";
 import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from "../services/servicioProductos.js";
 
 
 const router = Router();
-const productManager = new ProductManager("./src/data/product.json");
+//const productManager = new ProductManager("./src/data/product.json");
 
 //get --> obtener datos de los productos
 // GET /api/products

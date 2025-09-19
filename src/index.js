@@ -1,7 +1,7 @@
 import http from "http";
 import { Server } from "socket.io";
 import app from "./src/app.js";
-import { obtenerProductos, crearProducto, eliminarProducto } from "./src/services/servicioProductos.js";
+import { getProducts, createProduct, deleteProduct } from "./services/servicioProductos.js";
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -13,20 +13,20 @@ io.on("connection", socket => {
 
   // Emitir lista actual (obtener productos desde el servicio)
   (async () => {
-    const productos = await obtenerProductos();
+    const productos = await getProducts();
     socket.emit("productos:lista", productos);
   })();
 
   socket.on("producto:crear", async datos => {
-    const creado = await crearProducto(datos);
-    const productos = await obtenerProductos();
+    const creado = await createProduct(datos);
+    const productos = await getProducts();
     io.emit("productos:lista", productos);
     socket.emit("producto:creado", creado);
   });
 
   socket.on("producto:eliminar", async idProducto => {
-    await eliminarProducto(idProducto);
-    const productos = await obtenerProductos();
+    await deleteProduct(idProducto);
+    const productos = await getProducts();
     io.emit("productos:lista", productos);
     socket.emit("producto:eliminado", idProducto);
   });
