@@ -1,7 +1,7 @@
 import { getProducts } from "../services/servicioProductos.js";
 
 export async function mostrarInicio(req, res) {
-  const productos = await getProducts();
+  const productos = await getProducts(req.query);
   console.log("Productos cargados:", productos);
   res.render("home", { titulo: "Inicio", productos });
 }

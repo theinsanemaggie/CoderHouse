@@ -1,4 +1,4 @@
-import { ProductModel } from "../models/product.Model.js";
+import ProductModel from "../models/product.Model.js";
 
 // GET con filtros, paginación y sort
 export async function getProducts({ limit = 10, page = 1, sort, query }) {

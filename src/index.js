@@ -1,6 +1,6 @@
 import http from "http";
 import { Server } from "socket.io";
-import app from "./src/app.js";
+import app from "./app.js";
 import { getProducts, createProduct, deleteProduct } from "./services/servicioProductos.js";
 
 const server = http.createServer(app);
