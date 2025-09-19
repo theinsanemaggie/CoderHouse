@@ -1,69 +1,26 @@
 import express from "express";
-import {engine} from "express-handlebars";
-import { createServer } from "http";
-import {Server} from "socket.io";
-import path from "path"
-import { fileURLToPath } from "url"
-import { crearRouterVistas } from "./routers/views.router.js"
-
+import { engine } from "express-handlebars";
+import path from "path";
+import { fileURLToPath } from "url";
+import crearRouterVistas from "./routers/views.router.js";
 import productsRouter from "./routers/products.router.js";
-import  cartsRouter from "./routers/carts.router.js";
-import viewsRouter from "./routers/views.router.js";
+import cartsRouter from "./routers/carts.router.js";
 
-//instancias
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 8080;
 
-const httpServer = createServer(app); // servidor http basado en express
-const io = new Server(httpServer); //const io = require("socket.io")(http);
-
-
-//Midlewares
-app.use(express.json()); 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./src/public")); 
+app.use(express.static(path.join(__dirname, "public")));
 
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views", path.join(__dirname, "views"))
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", path.join(__dirname, "views"));
 
-app.use("/", crearRouterVistas())
+app.use("/", crearRouterVistas());
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
 
-//Configuración de socket
-io.on("connection", (socket) => {
-    console.log("Usuario conectado con websockets");
-});
-
-httpServer.listen(PORT, () =>{
-    console.log(`Servidor en el puerto ${PORT}`)
-})
-
-let productos = [];
-
-io.on("connection", socket => {
-  console.log("Cliente conectado");
-
-  // Enviar lista inicial
-  socket.emit("productos:list", productos);
-
-  // Crear producto
-  socket.on("producto:crear", ({ nombre, precio }) => {
-    const nuevo = {
-      id: productos.length + 1,
-      name: nombre,
-      price: parseFloat(precio)
-    };
-    productos.push(nuevo);
-    io.emit("productos:list", productos);
-  });
-
-  // Eliminar producto
-  socket.on("producto:eliminar", id => {
-    productos = productos.filter(p => p.id !== id);
-    io.emit("productos:list", productos);
-  });
-});
-export default app
+export default app;
