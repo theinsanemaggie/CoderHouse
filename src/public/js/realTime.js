@@ -11,9 +11,7 @@ const statusMessage = document.getElementById("statusMessage");
 
 let currentPage = 1;
 
-// Esta función se encarga de dibujar los productos en la vista
 function render(data) {
-  // Verificamos si la data y los productos existen
   if (!data || !data.payload || data.payload.length === 0) {
     productContainer.style.display = "none";
     emptyState.style.display = "block";
@@ -28,16 +26,14 @@ function render(data) {
     const card = document.createElement("div");
     card.className = "product-card";
 
-    const imgUrl = (p.thumbnails && p.thumbnails.length > 0) 
-      ? p.thumbnails[0] 
-      : "https://via.placeholder.com/300x200?text=Sin+imagen";
-
+    // Modificamos el innerHTML para quitar la imagen
     card.innerHTML = `
-      <img src="${imgUrl}" alt="${p.title || 'Producto'}" />
       <h3>${p.title || ''}</h3>
+      <p><strong>Descripción:</strong> ${p.description || ''}</p>
       <p><strong>Código:</strong> ${p.code || ''}</p>
       <p><strong>Stock:</strong> ${p.stock ?? 'N/A'}</p>
       <p><strong>Precio:</strong> $${p.price ?? 'N/A'}</p>
+      <p><strong>Categoría:</strong> ${p.category || 'N/A'}</p>
     `;
     productGrid.appendChild(card);
   });
@@ -58,7 +54,6 @@ function showStatusMessage(message, type) {
 }
 
 socket.on("connect", () => {
-  // Cuando se conecta el cliente, pide la lista de productos
   socket.emit("productos:solicitar", { page: 1, limit: 3 });
 });
 

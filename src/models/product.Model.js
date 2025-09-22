@@ -1,67 +1,52 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 
-const productSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  code: String,
-  price: Number,
-  status: Boolean,
-  stock: Number,
-  category: String,
-  thumbnails: [String]
-});
+const productSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "El título es obligatorio"],
+      trim: true
+    },
+    description: {
+      type: String,
+      required: [true, "La descripción es obligatoria"],
+    },
+    code: {
+      type: String,
+      required: [true, "El código es obligatorio"],
+      unique: true, 
+      trim: true
+    },
+    price: {
+      type: Number,
+      required: [true, "El precio es obligatorio"],
+      min: [0, "El precio no puede ser negativo"]
+    },
+    status: {
+      type: Boolean,
+      default: true
+    },
+    stock: {
+      type: Number,
+      default: 0,
+      min: [0, "El stock no puede ser negativo"]
+    },
+    category: {
+      type: String,
+      required: [true, "La categoría es obligatoria"]
+    },
+    thumbnails: {
+      type: [String], 
+      default: []
+    }
+  },
+  {
+    timestamps: true 
+  }
+);
 
-// habilitamos paginate
+
 productSchema.plugin(mongoosePaginate);
 
-export const ProductModel = mongoose.model("Product", productSchema);
-
-
-
-// import mongoose from "mongoose";
-// import mongoosePaginate from "mongoose-paginate-v2";
-
-// const productSchema = new mongoose.Schema({
-//   title: {
-//     type: String,
-//     required: true
-//   },
-//   description: {
-//     type: String,
-//     required: true
-//   },
-//   code: {
-//     type: String,
-//     required: true,
-//     unique: true // Asegura que no haya códigos de producto duplicados
-//   },
-//   price: {
-//     type: Number,
-//     required: true
-//   },
-//   status: {
-//     type: Boolean,
-//     default: true
-//   },
-//   stock: {
-//     type: Number,
-//     default: 0
-//   },
-//   category: {
-//     type: String,
-//     required: true
-//   },
-//   thumbnails: {
-//     type: [String],
-//     default: []
-//   },
-// }, { timestamps: true });
-
-// // Añade el plugin de paginación
-// productSchema.plugin(mongoosePaginate);
-
-// // Crea el modelo a partir del esquema
-// const ProductModel = mongoose.model("products", productSchema);
-
-// export default ProductModel;
+export const ProductModel = mongoose.model("products", productSchema);
