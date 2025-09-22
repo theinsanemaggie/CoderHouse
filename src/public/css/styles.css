@@ -1,0 +1,115 @@
+
+
+body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 24px; background: #f7f7f8; color: #111827 }
+a { color: #2563eb; text-decoration: none }
+.contenedor { max-width: 760px; margin: 0 auto; background: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06) }
+h1 { margin-top: 0 }
+form { display: grid; gap: 12px; margin: 16px 0 }
+input, button { padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb }
+button { background: #50214f; color: white; cursor: pointer }
+ul { padding-left: 18px }
+li { margin: 6px 0 }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+
+/* Grilla de productos */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Card individual */
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Imagen del producto */
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+/* Texto */
+.product-card h3 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.product-card p {
+  margin: 0.2rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* Precio destacado */
+.product-card p strong {
+  color: #111;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.pagination a {
+  background: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.pagination a:hover {
+  background: #0056b3;
+}
+
+.pagination span {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estado vacío */
+.empty-state {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state .btn {
+  background: #28a745;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.empty-state .btn:hover {
+  background: #1e7e34;
+}
+

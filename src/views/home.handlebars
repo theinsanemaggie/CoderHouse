@@ -1,9 +1,22 @@
+<h1 class="text-3xl font-bold mb-6">Todos los productos</h1>
+<a href="/realtimeproducts" class="btn btn-primary mb-4">Ir a carga de productos</a>
 
-<h1>Lista de productos</h1>
-<ul id="listaProductos">
-  {{#each productos}}
-    <li>{{this.id}} • {{this.name}} • ${{this.price}}</li>
-  {{/each}}
-</ul>
-<p><a href="/realtimeproducts">Ver productos en tiempo real</a></p>
-
+<div id="productContainer">
+  <div class="product-grid" id="listaProductos">
+    {{#if productos.payload}}
+      {{#each productos.payload}}
+        <div class="product-card">
+          <img src="{{this.thumbnails.[0]}}" alt="{{this.title}}" />
+          <h3 class="font-bold text-lg mb-1">{{this.title}}</h3>
+          <p class="text-sm text-gray-600">{{this.description}}</p>
+          <p class="text-sm text-gray-600"><strong>Código:</strong> {{this.code}}</p>
+          <p class="text-sm text-gray-600"><strong>Precio:</strong> ${{this.price}}</p>
+        </div>
+      {{/each}}
+    {{else}}
+      <div id="emptyState" class="empty-state">
+        <p>¡Ups! Parece que todavía no han cargado ningún producto</p>
+      </div>
+    {{/if}}
+  </div>
+</div>

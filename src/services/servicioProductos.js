@@ -1,61 +1,60 @@
-import ProductModel from "../models/product.Model.js";
+import { ProductModel } from "../models/product.Model.js";
 
-// GET con filtros, paginación y sort
-export async function getProducts({ limit = 10, page = 1, sort, query }) {
-  const filter = {};
-
-  if (query) {
-    if (query === "available") {
-      filter.status = true;
-      filter.stock = { $gt: 0 };
-
-    } else {
-      filter.category = query;
-    }
+export async function getProducts(options = {}) {
+  try {
+    const { limit = 10, page = 1, sort, query } = options;
+    const productos = await ProductModel.paginate(query || {}, {
+      limit: parseInt(limit),
+      page: parseInt(page),
+      sort: sort ? { price: sort === "asc" ? 1 : -1 } : {},
+    });
+    return productos;
+  } catch (err) {
+    console.error("Error al obtener productos:", err);
+    throw err;
   }
-
-  const sortOption = sort === "asc" ? { price: 1 } :
-                     sort === "desc" ? { price: -1 } : {};
-
-  const options = {
-    page,
-    limit,
-    sort: sortOption,
-    lean: true
-  };
-
-  const result = await ProductModel.paginate(filter, options);
-
-  return {
-    status: "success",
-    payload: result.docs,
-    totalPages: result.totalPages,
-    prevPage: result.prevPage,
-    nextPage: result.nextPage,
-    page: result.page,
-    hasPrevPage: result.hasPrevPage,
-    hasNextPage: result.hasNextPage,
-    prevLink: result.hasPrevPage ? `/api/products?page=${result.prevPage}&limit=${limit}` : null,
-    nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}&limit=${limit}` : null
-  };
 }
 
-// GET product by ID
-export async function getProductById(id) {
-  return await ProductModel.findById(id);
+export async function getProductById(productId) {
+  try {
+    return await ProductModel.findById(productId);
+  } catch (err) {
+    console.error("Error al obtener producto por ID:", err);
+    throw err;
+  }
 }
 
-// POST create product
-export async function createProduct(data) {
-  return await ProductModel.create(data);
+export async function createProduct(productData) {
+  try {
+    return await ProductModel.create(productData);
+  } catch (err) {
+    console.error("Error al crear un producto:", err);
+    throw err;
+  }
 }
 
-// PUT update product
-export async function updateProduct(id, updates) {
-  return await ProductModel.findByIdAndUpdate(id, updates, { new: true });
+export async function updateProduct(productId, updateData) {
+  try {
+    const updatedProduct = await ProductModel.findByIdAndUpdate(productId, updateData, { new: true });
+    if (!updatedProduct) {
+      throw new Error("Producto no encontrado para actualizar.");
+    }
+    return updatedProduct;
+  } catch (err) {
+    console.error("Error al actualizar el producto:", err);
+    throw err;
+  }
 }
 
-// DELETE product
-export async function deleteProduct(id) {
-  return await ProductModel.findByIdAndDelete(id);
+export async function deleteProduct(productId) {
+  try {
+    const result = await ProductModel.findByIdAndDelete(productId);
+    if (!result) {
+      throw new Error("Producto no encontrado.");
+    }
+    return result;
+  } catch (err) {
+    console.error("Error al eliminar el producto:", err);
+    throw err;
+  }
 }

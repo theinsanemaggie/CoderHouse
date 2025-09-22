@@ -8,31 +8,69 @@ const io = new Server(server);
 
 app.set("io", io);
 
-io.on("connection", socket => {
-  console.log("Cliente conectado por sockets");
+io.on('connection', (socket) => {
+    console.log(`Cliente conectado: ${socket.id}`);
 
-  // Emitir lista actual (obtener productos desde el servicio)
-  (async () => {
-    const productos = await getProducts();
-    socket.emit("productos:lista", productos);
-  })();
+    // Evento para cargar productos con paginación
+    socket.on("productos:solicitar", async ({ page = 1, limit = 3 }) => {
+        try {
+            const productos = await getProducts({ page, limit });
+            socket.emit("productos:lista", productos);
+        } catch (err) {
+            console.error("Error al obtener productos:", err);
+            socket.emit("estado:mensaje", {
+                message: "Error al cargar los productos.",
+                status: "error"
+            });
+        }
+    });
 
-  socket.on("producto:crear", async datos => {
-    const creado = await createProduct(datos);
-    const productos = await getProducts();
-    io.emit("productos:lista", productos);
-    socket.emit("producto:creado", creado);
-  });
+    // Evento para crear un producto
+    socket.on("producto:crear", async (datos) => {
+        try {
+            await createProduct(datos);
+            // Vuelve a solicitar los productos para actualizar a todos los clientes
+            const productosActualizados = await getProducts({ page: 1, limit: 3 });
+            io.emit("productos:lista", productosActualizados);
+            io.emit("estado:mensaje", {
+                message: "Producto creado exitosamente.",
+                status: "success"
+            });
+        } catch (err) {
+            console.error("Error al crear el producto:", err);
+            socket.emit("estado:mensaje", {
+                message: "Error al crear el producto.",
+                status: "error"
+            });
+        }
+    });
 
-  socket.on("producto:eliminar", async idProducto => {
-    await deleteProduct(idProducto);
-    const productos = await getProducts();
-    io.emit("productos:lista", productos);
-    socket.emit("producto:eliminado", idProducto);
-  });
+    // Evento para eliminar un producto
+    socket.on("producto:eliminar", async (id) => {
+        try {
+            await deleteProduct(id);
+            // Vuelve a solicitar los productos para actualizar a todos los clientes
+            const productosActualizados = await getProducts({ page: 1, limit: 3 });
+            io.emit("productos:lista", productosActualizados);
+            io.emit("estado:mensaje", {
+                message: "Producto eliminado exitosamente.",
+                status: "success"
+            });
+        } catch (err) {
+            console.error("Error al eliminar el producto:", err);
+            socket.emit("estado:mensaje", {
+                message: "Error al eliminar el producto.",
+                status: "error"
+            });
+        }
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Cliente desconectado");
+    });
 });
 
 const puerto = process.env.PUERTO || 8080;
 server.listen(puerto, () => {
-  console.log(`Servidor activo en http://localhost:${puerto}`);
+    console.log(`Servidor activo en http://localhost:${puerto}`);
 });
