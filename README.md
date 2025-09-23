@@ -1,4 +1,3 @@
-## Nota: entrega final en proceso
 # 🛒 Proyecto Final - Backend con MongoDB (Curso Coderhouse - MERN)
 
 ## 🚀 Tecnologías utilizadas
